@@ -13,10 +13,12 @@ function compare {
   fi
 }
 
+
 #  Sets the initial values of variables.
 #    file_count is set as the number of files (including folders) in the current directory at the initial script run
-#    loop_status keeps track of the continuation of the loop (and therefore also the guess status)
-file_count=$(ls | wc -l)
+#      Alternate file count is simply $(ls | wc -l), but this would include directories
+#    loop_status keeps track of the continuation of the loop (and therefore also whether the guess was correct
+file_count=$(ls -l | grep -v ^total | grep -v ^d | wc -l)
 loop_status=1
 
 #  Loop that continues while $loop_status is not 0.  It asks for the guess and assigns the response to $guess
