@@ -1,3 +1,8 @@
+#  Simple function called "compare" that returns:
+#    0 if the values it is passed are equal
+#    1 if the first value is lower than the second
+#    2 if the second value is higher than the first
+#    Note:  the return value of zero is intended to be in line with the "true" command exit status
 function compare {
   if [[ $1 -eq $2 ]] ; then
     echo 0
@@ -7,3 +12,21 @@ function compare {
     echo 2
   fi
 }
+
+file_count=$(ls | wc -l)
+loop_status=1
+
+while [[ $loop_status -ne 0 ]]
+do
+  echo "Type how many files you think the folder contains, then press enter:"
+  read guess
+  let loop_status=$(compare $guess $file_count)
+
+  if [[ $loop_status -eq 0 ]] ; then
+    echo "Your guess of $guess was correct!  Exiting loop"
+  elif [[ $loop_status -eq 1 ]] ; then
+    echo "Your guess of $guess was too low.  Try again!"
+  else
+    echo "Your guess of $guess was too high.  Try again!"
+  fi
+done
